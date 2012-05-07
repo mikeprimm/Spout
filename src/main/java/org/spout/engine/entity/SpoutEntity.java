@@ -80,7 +80,6 @@ public class SpoutEntity implements Entity {
 	private final AtomicInteger health = new AtomicInteger(1), maxHealth = new AtomicInteger(1);
 	private final AtomicInteger id = new AtomicInteger();
 	private final AtomicInteger viewDistanceLive = new AtomicInteger();
-	private static final long serialVersionUID = 1L;
 	private static final Transform DEAD = new Transform(Point.invalid, Quaternion.IDENTITY, Vector3.ZERO);
 	private final OptimisticReadWriteLock lock = new OptimisticReadWriteLock();
 	private final Transform transform = new Transform();
@@ -131,6 +130,10 @@ public class SpoutEntity implements Entity {
 
 	public void onTick(float dt) {
 		if (this.transform != null && this.transform.getPosition() != null && this.transform.getPosition().getWorld() != null && this.transform.getRotation() != null && this.transform.getScale() != null) {
+			if(lastTransform != this.transform) {
+				chunkLive.set(transform.getPosition().getWorld().getChunkFromBlock(transform.getPosition()));
+				entityManagerLive.set(((SpoutRegion) chunkLive.get().getRegion()).getEntityManager());
+			}
 			lastTransform = transform.copy();
 		}
 
