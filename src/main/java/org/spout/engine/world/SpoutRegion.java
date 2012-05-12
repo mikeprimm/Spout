@@ -214,8 +214,8 @@ public class SpoutRegion extends Region {
 			SpoutChunk newChunk = WorldFiles.loadChunk(this, x, y, z, this.getChunkInputStream(x, y, z));
 			if (newChunk == null) {
 				if (loadopt != LoadGenerateOption.LOAD_OR_GENERATE_IF_NEEDED) {
-			    	return null;
-		    	}
+					return null;
+				}
 				newChunk = generateChunk(x, y, z);
 			}
 
